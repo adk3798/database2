@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h1> Register as a Parent </h1>
+  <?php
+    session_start();
+  ?>
+  <?php if(isset($_SESSION['name'])) : ?>
+    <?php
+      echo '<h1>Welcome, ' . $_SESSION['name'] . '</h1>';
+    ?>
+  <?php endif; ?>
+  <h1> Register a Parent Account </h1>
 
   <?php
     // define variables and set to empty values
@@ -74,6 +82,13 @@
     <form action="parent_login.php">
       <input type="submit" value="Proceed to Login"></input><br><br>
     </form>
+<?php endif; ?>
+
+<?php if(isset($_SESSION['name'])) : ?>
+  <form action="logout.php">
+    Logout:
+    <input type="submit" value="Logout"></input><br><br>
+  </form>
 <?php endif; ?>
 
 

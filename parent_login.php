@@ -6,11 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+  <?php
+    session_start();
+  ?>
+  <?php if(isset($_SESSION['name'])) : ?>
+    <?php
+      echo '<h1>Welcome, ' . $_SESSION['name'] . '</h1>';
+    ?>
+  <?php endif; ?>
   <h1> Login as a Parent </h1>
 
   <?php
     // define variables and set to empty values
-    $email = $password = "";
+    $email = $password = $name = $pid = $phone = "";
     $valid = false;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -25,6 +33,8 @@
       if($result->num_rows != 0) {
         $row = mysqli_fetch_array($result);
         $pid = $row['id'];
+        $name = $row['name'];
+        $phone = $row['phone'];
 
         $query2 = "SELECT * FROM parents WHERE parent_id='$pid'";
         $result2 = $mysqli->query($query2);
@@ -37,7 +47,10 @@
         echo 'The given email and password account is not associated with a parent account.';
       }
       else {
-        echo 'Login success';
+        $_SESSION['name'] = $name;
+        $_SESSION['id'] = $pid;
+        $_SESSION['email'] = $email;
+        $_SESSION['phone'] = $phone;
       }
 
       $mysqli->close();
@@ -50,6 +63,7 @@
       return $data;
     }
   ?>
+  <?php if(!isset($_SESSION['name'])) : ?>
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required><br>
@@ -62,6 +76,16 @@
     No account? Register here:
     <input type="submit" value="Register as Parent"></input><br><br>
   </form>
+<?php else : ?>
+  <?php
+    echo 'You are currently logged in as: ' . $_SESSION['name'] . '. Please logout before logging into another account.</br>';
+  ?>
+
+  <form action="logout.php">
+    Logout:
+    <input type="submit" value="Logout"></input><br><br>
+  </form>
+<?php endif; ?>
 
   <form action="landing.php">
     Return to main page:

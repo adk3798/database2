@@ -6,20 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h1> Login or Register </h1>
-
-  <form action="student_registration.php">
-    <input type="submit" value="Register as Student"></input><br>
-  </form>
-  <form action="student_login.php">
-    <input type="submit" value="Login as Student"></input><br><br>
-  </form>
-  <form action="parent_registration.php">
-    <input type="submit" value="Register as Parent"></input><br>
-  </form>
-  <form action="parent_login.php">
-    <input type="submit" value="Login as Parent"></input><br><br>
-  </form>
+  <?php
+    session_start();
+  ?>
+  <?php if(isset($_SESSION['name'])) : ?>
+    <?php
+      echo '<h1>Welcome, ' . $_SESSION['name'] . '</h1>';
+    ?>
+  <?php else : ?>
+    <h1> Login or Register </h1>
+    <form action="student_registration.php">
+      <input type="submit" value="Register a Student"></input><br>
+    </form>
+    <form action="student_login.php">
+      <input type="submit" value="Login as Student"></input><br><br>
+    </form>
+    <form action="parent_registration.php">
+      <input type="submit" value="Register a Parent"></input><br>
+    </form>
+    <form action="parent_login.php">
+      <input type="submit" value="Login as Parent"></input><br><br>
+    </form>
+  <?php endif; ?>
+  <?php if(isset($_SESSION['name'])) : ?>
+    <form action="logout.php">
+      Logout:
+      <input type="submit" value="Logout"></input><br><br>
+    </form>
+  <?php endif; ?>
     <?php
 
       $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
