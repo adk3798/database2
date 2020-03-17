@@ -89,9 +89,9 @@ CREATE TABLE `admins` (
 CREATE TABLE `groups` (
   `group_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `mentor_grade_req` int(11) NOT NULL,
-  `mentee_grade_req` int(11) NOT NULL,
+  `description` int(11) DEFAULT NULL,
+  `mentor_grade_req` int(11) DEFAULT NULL,
+  `mentee_grade_req` int(11) DEFAULT NULL,
   PRIMARY KEY (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
