@@ -28,6 +28,12 @@
       <input type="submit" value="Login as Parent"></input><br><br>
     </form>
   <?php endif; ?>
+  <?php if(isset($_SESSION['sid'])) : ?>
+    <h1> Meeting Sign Up </h1>
+    <form action="meeting_signup.php">
+      <input type="submit" value="Signup for Meetings"></input><br>
+    </form><br><br>
+  <?php endif; ?>
   <?php if(isset($_SESSION['name'])) : ?>
     <form action="logout.php">
       Logout:

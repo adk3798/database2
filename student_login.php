@@ -49,6 +49,7 @@
       else {
         $_SESSION['name'] = $name;
         $_SESSION['id'] = $sid;
+        $_SESSION['sid'] = $sid;
         $_SESSION['email'] = $email;
         $_SESSION['phone'] = $phone;
       }
@@ -78,7 +79,7 @@
     </form>
   <?php else : ?>
     <?php
-      echo 'You are currently logged in as: ' . $_SESSION['name'] . '. Please logout before logging into another account.</br>';
+      echo 'You are currently logged in as: ' . $_SESSION['name'] . '.</br>';
     ?>
 
     <form action="logout.php">
