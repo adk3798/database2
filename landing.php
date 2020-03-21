@@ -28,7 +28,26 @@
       <input type="submit" value="Login as Parent"></input><br><br>
     </form>
   <?php endif; ?>
-  <?php if(isset($_SESSION['sid'])) : ?>
+  <?php if(isset($_SESSION['pid'])) : ?>
+    <?php
+      unset($_SESSION['sid']);
+      $pid = $_SESSION['pid'];
+      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+
+      $query = "SELECT * FROM users WHERE id IN(SELECT student_id FROM students WHERE parent_id='$pid')"; //You don't need a ; like you do in SQL
+      $result = $mysqli->query($query);
+      echo "<h1> Sign Up Student for Meetings </h1>";
+      while($row = mysqli_fetch_array($result)){   //Creates a loop to loop through results
+        $sid = $row['id'];
+        $name = $row['name'];
+        echo  "
+              <form action=\"meeting_signup.php\" method=\"post\">
+                <button name=\"parent_join\" value=\"$sid\" type=\"submit\">$name</button><br><br>
+              ";
+      }
+
+    ?>
+  <?php elseif(isset($_SESSION['sid'])) : ?>
     <h1> Meeting Sign Up </h1>
     <form action="meeting_signup.php">
       <input type="submit" value="Signup for Meetings"></input><br>
