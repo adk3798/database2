@@ -12,6 +12,10 @@
   <?php if(isset($_SESSION['name'])) : ?>
     <?php
       echo '<h1>Welcome, ' . $_SESSION['name'] . '</h1>';
+      echo "<form action=\"logout.php\">
+        Logout:
+        <input type=\"submit\" value=\"Logout\"></input><br><br>
+      </form>"
     ?>
   <?php else : ?>
     <h1> Login or Register </h1>
@@ -52,12 +56,6 @@
     <form action="meeting_signup.php">
       <input type="submit" value="Signup for Meetings"></input><br>
     </form><br><br>
-  <?php endif; ?>
-  <?php if(isset($_SESSION['name'])) : ?>
-    <form action="logout.php">
-      Logout:
-      <input type="submit" value="Logout"></input><br><br>
-    </form>
   <?php endif; ?>
     <?php
 

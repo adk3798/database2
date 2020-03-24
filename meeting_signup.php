@@ -106,6 +106,7 @@
       echo '<p>Meetings you can currently signup for will have a "Join Meeting" button next to them</p>';
       echo '<p>Meetings you are currently enrolled in will have a "Leave Meeting" button next to them</p>';
       echo '<p>Meetings you could be eligible to sign up for but can\'t due to conflicts will be displayed but have no join/leave option.</p>';
+      echo '<i>&nbsp&nbspNote on Conflicts: You may only mentee one meeting per subject per weekend and mentor one meeting per weekend. You also cannot join two meetings running at the same time.</i>';
       echo '<p>Meetings you are enrolled in as a mentor will have a "Meeting Info" button that will allow you to see the current mentors and mentees for that meeting.</p>';
       echo '<p>The "Join Recurring Meetings" button will sign up you up for every meeting for the rest of the school year for that subject and time slot where there aren\'t conflicts</p>';
 
@@ -123,7 +124,7 @@
 
       echo "<tr><td>" . "Name" . "</td><td>" . "Date" . "</td>
             <td>" . "Announcement" . "</td><td>" . "Day of the Week" . "</td>
-            <td>" . "Start Time" . "</td><td>" . "End Time" . "</td></tr>";
+            <td>" . "Grade" . "</td><td>" . "Start Time" . "</td><td>" . "End Time" . "</td></tr>";
 
       while($row = mysqli_fetch_array($result2)){   //Creates a loop to loop through results
         $tid = $row['time_slot_id'];
@@ -133,7 +134,7 @@
         $meet_id = $row['meet_id'];
         echo "<tr><td>" . $row['meet_name'] . "</td><td>" . $row['date'] . "</td>
               <td>" . $row['announcement'] . "</td><td>" . $trow['day_of_the_week'] . "</td>
-              <td>" . $trow['start_time'] . "</td><td>" . $trow['end_time'];
+              <td>" . $row['group_id'] . "</td><td>" . $trow['start_time'] . "</td><td>" . $trow['end_time'];
         $query = "SELECT * FROM enroll WHERE mentee_id='$sid' AND meet_id='$meet_id'";
         $result = $mysqli->query($query);
         $conflict = mentee_conflict($sid, $meet_id, $mysqli);
@@ -177,7 +178,7 @@
 
       echo "<tr><td>" . "Name" . "</td><td>" . "Date" . "</td>
             <td>" . "Announcement" . "</td><td>" . "Day of the Week" . "</td>
-            <td>" . "Start Time" . "</td><td>" . "End Time" . "</td></tr>";
+            <td>" . "Grade" . "</td><td>" . "Start Time" . "</td><td>" . "End Time" . "</td></tr>";
 
       while($row = mysqli_fetch_array($result2)){   //Creates a loop to loop through results
         $tid = $row['time_slot_id'];
@@ -187,7 +188,7 @@
         $meet_id = $row['meet_id'];
         echo "<tr><td>" . $row['meet_name'] . "</td><td>" . $row['date'] . "</td>
               <td>" . $row['announcement'] . "</td><td>" . $trow['day_of_the_week'] . "</td>
-              <td>" . $trow['start_time'] . "</td><td>" . $trow['end_time'];
+              <td>" . $row['group_id'] . "</td><td>" . $trow['start_time'] . "</td><td>" . $trow['end_time'];
         $query = "SELECT * FROM enroll2 WHERE mentor_id='$sid' AND meet_id='$meet_id'";
         $result = $mysqli->query($query);
         $conflict = mentor_conflict($sid, $meet_id, $mysqli);

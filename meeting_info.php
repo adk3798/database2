@@ -67,7 +67,6 @@
             $dt1 = date_create($meet_date);
             $dt2 = date_create($meet2_date);
             $diff = date_diff($dt1, $dt2, true);
-            echo '<br>' . $meet_ts . '   ' . $meet2_ts . '<br>';
             if(((int)$diff->format('%a') <= 1 && $subject == $meet2_subject) ||
                   ((int)$diff->format('%a') == 0 && $meet_ts == $meet2_ts)) {
               return true;
@@ -229,8 +228,10 @@
       $meet_ts = $row['time_slot_id'];
       $meet_group = $row['group_id'];
 
-      $am_query = "SELECT * FROM meetings WHERE meet_name='$meet_name' AND time_slot_id='$meet_ts' AND group_id='$meet_group' AND date>='$today'";
+      $am_query = "SELECT * FROM meetings WHERE meet_name='$meet_name' AND time_slot_id=$meet_ts AND group_id=$meet_group";
       $am_result = $mysqli->query($am_query);
+
+      echo $am_query;
 
       while($am_row = mysqli_fetch_array($am_result)) {
         $meet_id = $am_row['meet_id'];
@@ -238,7 +239,7 @@
         $query = "SELECT * FROM enroll WHERE mentee_id='$sid' AND meet_id='$meet_id'";
         $result = $mysqli->query($query);
 
-        $conflict = mentor_conflict($sid, $meet_id, $mysqli);
+        $conflict = mentee_conflict($sid, $meet_id, $mysqli);
 
         if($result->num_rows !== 0 && !$conflict) {
           $query = "DELETE FROM enroll WHERE mentee_id='$sid' AND meet_id='$meet_id'";
@@ -363,10 +364,27 @@
       $query = "DELETE FROM mentees WHERE mentee_id='$sid'";
       $result = $mysqli->query($query);
 
+      echo "<h1>You have left all meetings as a mentee</h1>";
+
+      $mysqli->close();
+    }
+
+    else if(isset($_POST['leave_all_mentor'])) { // submit2 means mentor
+      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+
+      $sid = $_SESSION['sid'];
+
+      $query = "DELETE FROM enroll2 WHERE mentor_id='$sid'";
+      $result = $mysqli->query($query);
+
+      $query = "DELETE FROM mentors WHERE mentor_id='$sid'";
+      $result = $mysqli->query($query);
+
       echo "<h1>You have left all meetings as a mentor</h1>";
 
       $mysqli->close();
     }
+
   ?>
 
   <form action="meeting_signup.php">
