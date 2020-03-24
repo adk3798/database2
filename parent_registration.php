@@ -33,7 +33,7 @@
       $result = $mysqli->query($query);
 
       if($result->num_rows !== 0) {
-        echo "The email address: <span style=\"color:red\"> $email </span>is already taken. Please try again with a different email.";
+        echo "The email address: \"<span style=\"color:red\"> $email </span>\"is already taken. Please try again with a different email.";
       }
       else {
         // If the email isn't taken, actually register the parent

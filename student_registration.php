@@ -38,7 +38,7 @@
       $result2 = $mysqli->query($query2);
 
       if($result->num_rows !== 0) {
-        echo "The email address: <span style=\"color:red\"> $email </span>is already taken. Please try again with a different email.";
+        echo "The email address: \"<span style=\"color:red\"> $email </span>\"is already taken. Please try again with a different email.";
       }
       else if($grade == 0) {
         echo "<span style=\"color:red\"> No valid grade was selected</span>";
