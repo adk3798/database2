@@ -40,7 +40,7 @@
       }
     ?>
   <?php endif; ?>
-  <h1> Register a Parent Account </h1>
+  <p> Click the checkbox next to fields you'd like to update, fill in the info for those fields and click the "Change Information" button </p>
 
   <?php
     // define variables and set to empty values
@@ -63,6 +63,9 @@
       }
       else if(isset($_SESSION['pid'])) {
         $id = $_SESSION['pid'];
+      }
+      else if(isset($_SESSION['aid'])) {
+        $id = $_SESSION['aid'];
       }
 
 
@@ -139,7 +142,7 @@
       return $data;
     }
   ?>
-<?php if(!$valid) : ?>
+
   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email">
@@ -171,11 +174,6 @@
     <?php endif; ?>
     <input type="submit" value="Change Information"></input><br><br>
   </form>
-<?php else : ?>
-    <form action="parent_login.php">
-      <input type="submit" value="Proceed to Login"></input><br><br>
-    </form>
-<?php endif; ?>
 
 <?php if(isset($_SESSION['name'])) : ?>
   <form action="logout.php">

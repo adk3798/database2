@@ -110,11 +110,16 @@
       echo '<p>Meetings you are enrolled in as a mentor will have a "Meeting Info" button that will allow you to see the current mentors and mentees for that meeting.</p>';
       echo '<p>The "Join Recurring Meetings" button will sign up you up for every meeting for the rest of the school year for that subject and time slot where there aren\'t conflicts</p>';
 
+      echo "<form action=\"landing.php\">
+            Return to main page:
+            <input type=\"submit\" value=\"Main Page\"></input><br><br>
+            </form>";
+
       $today = date("Y-m-d");
 
       $mentee_query =
         "SELECT * FROM meetings WHERE group_id IN
-          (SELECT group_id FROM groups WHERE description='$grade' AND date>='$today')
+          (SELECT group_id FROM groups WHERE description='$grade') AND date>='$today'
         ORDER BY date ASC"; //You don't need a ; like you do in SQL
       $result2 = $mysqli->query($mentee_query);
 
@@ -168,7 +173,7 @@
 
       $mentor_query =
         "SELECT * FROM meetings WHERE group_id IN
-          (SELECT group_id FROM groups WHERE mentor_grade_req <='$grade' AND date>='$today')
+          (SELECT group_id FROM groups WHERE mentor_grade_req <='$grade') AND date>='$today'
         ORDER BY date ASC"; //You don't need a ; like you do in SQL
       $result2 = $mysqli->query($mentor_query);
 

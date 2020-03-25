@@ -35,6 +35,9 @@
     <form action="parent_login.php">
       <input type="submit" value="Login as Parent"></input><br><br>
     </form>
+    <form action="admin_login.php">
+      <input type="submit" value="Login as Admin"></input><br><br>
+    </form>
   <?php endif; ?>
   <?php if(isset($_SESSION['pid'])) : ?>
     <?php
@@ -79,6 +82,15 @@
     <h1> Meeting Sign Up </h1>
     <form action="meeting_signup.php">
       <input type="submit" value="Signup for Meetings"></input><br>
+    </form><br><br>
+  <?php elseif(isset($_SESSION['aid'])) : ?>
+    <h1> Post Study Materials </h1>
+    <form action="study_materials.php">
+      <input type="submit" value="Post Study Materials"></input><br>
+    </form><br><br>
+    <h1> Assign to Meetings </h1>
+    <form action="meeting_assign.php">
+      <input type="submit" value="Assign to Meetings"></input><br>
     </form><br><br>
   <?php endif; ?>
     <?php
