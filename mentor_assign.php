@@ -137,18 +137,22 @@
       echo '<h1>Possible Mentors</h1>';
       echo "<table>";
       echo "<tr><td>" . "name" . "</td> <td>" . "email" . "</td>
-            <td>" . "phone" . "</td></tr>";  //$row['index'] the index here is a field name
+            <td>" . "phone" . "</td><td>" . "grade" . "</td></tr>";  //$row['index'] the index here is a field name
       $result = $mysqli->query($query);
       while($row = mysqli_fetch_array($result)){
         $sid = $row['id'];
         $mentor_query = "SELECT * FROM enroll2 WHERE mentor_id=$sid AND meet_id=$meet_id";
         $mentor_result = $mysqli->query($mentor_query);
+        $student_query = "SELECT * FROM students WHERE student_id=$sid";
+        $student_result = $mysqli->query($student_query);
+        $student_row = mysqli_fetch_array($student_result);
+        $mentor_grade = $student_row['grade'];
         if($mentor_result->num_rows === 0 ) {
           $conflict = mentor_conflict($sid, $meet_id, $mysqli);
 
           if(!$conflict){
             echo "<tr><td>" . $row['name'] . "</td> <td>" . $row['email'] . "</td>
-                   <td>" . $row['phone'];  //$row['index'] the index here is a field name
+                   <td>" . $row['phone'] . "</td><td>" . $mentor_grade;  //$row['index'] the index here is a field name
             echo  "</td><td>
                   <form action=\"mentor_assign.php\" method=\"post\">
                     <button name=\"assign\" value=\"$sid\" type=\"submit\">Assign</button>
@@ -157,7 +161,7 @@
         }
         else {
           echo "<tr><td>" . $row['name'] . "</td> <td>" . $row['email'] . "</td>
-                 <td>" . $row['phone'];  //$row['index'] the index here is a field name
+                 <td>" . $row['phone'] . "</td><td>" . $mentor_grade;  //$row['index'] the index here is a field name
           echo  "</td><td>
                 <form action=\"mentor_assign.php\" method=\"post\">
                   <button name=\"remove\" value=\"$sid\" type=\"submit\">Remove From Meeting</button>

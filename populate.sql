@@ -139,6 +139,9 @@ INSERT INTO mentees (mentee_id) VALUES (28);
 INSERT INTO mentees (mentee_id) VALUES (29);
 INSERT INTO mentees (mentee_id) VALUES (30);
 
+INSERT INTO mentees (mentee_id) VALUES (16);
+INSERT INTO mentees (mentee_id) VALUES (17);
+INSERT INTO mentees (mentee_id) VALUES (18);
 INSERT INTO mentors (mentor_id) VALUES (19);
 INSERT INTO mentors (mentor_id) VALUES (20);
 INSERT INTO mentors (mentor_id) VALUES (21);
@@ -160,11 +163,14 @@ INSERT INTO enroll (mentee_id, meet_id) VALUES (28, 5);
 INSERT INTO enroll (mentee_id, meet_id) VALUES (29, 14);
 INSERT INTO enroll (mentee_id, meet_id) VALUES (30, 14);
 
-INSERT INTO enroll2 (mentor_id, meet_id) VALUES (19, 5);
-INSERT INTO enroll2 (mentor_id, meet_id) VALUES (20, 5);
-INSERT INTO enroll2 (mentor_id, meet_id) VALUES (21, 6);
+INSERT INTO enroll2 (mentor_id, meet_id) VALUES (16, 5);
+INSERT INTO enroll2 (mentor_id, meet_id) VALUES (17, 5);
+INSERT INTO enroll2 (mentor_id, meet_id) VALUES (18, 5);
+INSERT INTO enroll2 (mentor_id, meet_id) VALUES (19, 6);
+INSERT INTO enroll2 (mentor_id, meet_id) VALUES (20, 7);
+INSERT INTO enroll2 (mentor_id, meet_id) VALUES (21, 12);
 INSERT INTO enroll2 (mentor_id, meet_id) VALUES (22, 6);
-INSERT INTO enroll2 (mentor_id, meet_id) VALUES (23, 5);
+INSERT INTO enroll2 (mentor_id, meet_id) VALUES (23, 21);
 INSERT INTO enroll2 (mentor_id, meet_id) VALUES (24, 14);
 INSERT INTO enroll2 (mentor_id, meet_id) VALUES (25, 14);
 INSERT INTO enroll2 (mentor_id, meet_id) VALUES (26, 23);

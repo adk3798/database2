@@ -26,7 +26,7 @@
       $result = $mysqli->query($meeting_query);
 
       echo '<h1>Meetings</h1>';
-      echo "<p>Meeting with fewer than 2 mentors have mentor count in red</p>";
+      echo "<p>All meetings that already have some study materials will have a \"View Study Materials\" button</p>";
 
       echo "<table>"; // start a table tag in the HTML
 
@@ -47,27 +47,28 @@
         $mentor_query = "SELECT * FROM enroll2 WHERE meet_id=$meet_id";
         $mentor_result = $mysqli->query($mentor_query);
         $mentor_count = $mentor_result->num_rows;
+        $assign_query = "SELECT * FROM assign WHERE meet_id=$meet_id";
+        $assign_result = $mysqli->query($assign_query);
         echo "<tr><td>" . $row['meet_name'] . "</td><td>" . $row['date'] . "</td>
               <td>" . $row['announcement'] . "</td><td>" . $trow['day_of_the_week'] . "</td>
               <td>" . $row['group_id'] . "</td><td>" . $trow['start_time'] . "</td>
               <td>". $trow['end_time'] . "</td><td>". $mentee_count . "</td>
-              <td>";
-        if($mentor_count < 2) {
-          echo "<span style=\"color:red\"> $mentor_count </span>";
-        }
-        else {
-          echo $mentor_count;
-        }
+              <td>". $mentor_count;
 
         echo  "</td><td>
-              <form action=\"mentee_assign.php\" method=\"post\">
-                <button name=\"submit\" value=\"$meet_id\" type=\"submit\">Assign Mentees</button>
+              <form action=\"add_sm.php\" method=\"post\">
+                <button name=\"submit\" value=\"$meet_id\" type=\"submit\">Add Study Materials</button>
               </form></td>";
-        echo  "</td><td>
-                <form action=\"mentor_assign.php\" method=\"post\">
-                  <button name=\"submit\" value=\"$meet_id\" type=\"submit\">Assign Mentors</button>
-              </form></td></tr>";
+        if($assign_result->num_rows !== 0) {
+          echo  "<td>
+                <form action=\"view_sm.php\" method=\"post\">
+                  <button name=\"submit\" value=\"$meet_id\" type=\"submit\">View Study Materials</button>
+                </form></td>";
+        }
+        echo "</tr>";
       }
+
+      echo "</table>";
 
       $mysqli->close();
     ?>
