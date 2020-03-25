@@ -59,29 +59,63 @@
           </form><br><br>";
 
     if(isset($_POST['assign'])) { // submit being set means mentee
-        $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+        $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
         $sid = $_POST['assign'];
         $meet_id = $_SESSION['mid'];
         $query = "INSERT INTO enroll (meet_id, mentee_id) VALUES ({$meet_id}, {$sid})";
         $result = $mysqli->query($query);
+
+        $query = "SELECT * FROM users WHERE id=$sid";
+        $result = $mysqli->query($query);
+        $row = mysqli_fetch_array($result);
+
+        $name = $row['name'];
+        $email = $row['email'];
+        $phone = $row['phone'];
+        $contents = $name . ' | ' . $email . ' | ' . $phone . "\n";
+
+        $file = 'mentee_add_notification.txt';
+
+        if(!is_file($file)){
+          file_put_contents($file, $contents);
+        }
+        else {
+          $fp = fopen('mentee_add_notification.txt', 'a');//opens file in append mode
+          fwrite($fp, $contents);
+          fclose($fp);
+        }
+
         $mysqli->close();
     }
     if(isset($_POST['remove'])) { // submit being set means mentee
-        $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+        $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
         $sid = $_POST['remove'];
         $meet_id = $_SESSION['mid'];
         $query = "DELETE FROM enroll WHERE mentee_id=$sid AND meet_id=$meet_id";
         $result = $mysqli->query($query);
 
-        $query = "SELECT * FROM enroll WHERE mentee_id=$sid";
+        $query = "SELECT * FROM users WHERE id=$sid";
         $result = $mysqli->query($query);
+        $row = mysqli_fetch_array($result);
 
-        if($result->num_rows === 0) {
-          $query = "DELETE FROM mentees WHERE mentee_id=$sid";
-          $result = $mysqli->query($query);
+        $name = $row['name'];
+        $email = $row['email'];
+        $phone = $row['phone'];
+        $contents = $name . ' | ' . $email . ' | ' . $phone . "\n";
+
+        $file = 'mentee_remove_notification.txt';
+
+        if(!is_file($file)){
+          file_put_contents($file, $contents);
         }
+        else {
+          $fp = fopen('mentee_remove_notification.txt', 'a');//opens file in append mode
+          fwrite($fp, $contents);
+          fclose($fp);
+        }
+
         $mysqli->close();
     }
     if (isset($_POST['submit'])) { // submit being set means mentee
@@ -90,7 +124,7 @@
     }
 
       $meet_id = $_SESSION['mid'];
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $meeting_query = "SELECT * FROM meetings WHERE meet_id=$meet_id"; //You don't need a ; like you do in SQL
       $result = $mysqli->query($meeting_query);

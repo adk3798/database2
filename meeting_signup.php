@@ -87,7 +87,7 @@
   <?php if(isset($_SESSION['sid'])) : ?>
     <?php
 
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $sid = $_SESSION['sid'];
 
@@ -119,7 +119,7 @@
 
       $mentee_query =
         "SELECT * FROM meetings WHERE group_id IN
-          (SELECT group_id FROM groups WHERE description='$grade') AND date>='$today'
+          (SELECT group_id FROM groups WHERE description='$grade')
         ORDER BY date ASC"; //You don't need a ; like you do in SQL
       $result2 = $mysqli->query($mentee_query);
 
@@ -161,6 +161,10 @@
           echo  "</td><td>
                   <form action=\"meeting_info.php\" method=\"post\">
                     <button name=\"submit_all_leave\" value=\"$meet_id\" type=\"submit\">Leave Recurring Meetings</button>
+                  </form></td>";
+          echo  "</td><td>
+                  <form action=\"view2_sm.php\" method=\"post\">
+                      <button name=\"submit\" value=\"$meet_id\" type=\"submit\">View Study Materials</button>
                   </form></td></tr>";
         }
       }
@@ -173,7 +177,7 @@
 
       $mentor_query =
         "SELECT * FROM meetings WHERE group_id IN
-          (SELECT group_id FROM groups WHERE mentor_grade_req <='$grade') AND date>='$today'
+          (SELECT group_id FROM groups WHERE mentor_grade_req <='$grade')
         ORDER BY date ASC"; //You don't need a ; like you do in SQL
       $result2 = $mysqli->query($mentor_query);
 
@@ -218,7 +222,11 @@
                   </form></td>";
           echo  "</td><td>
                 <form action=\"meeting_info.php\" method=\"post\">
-                  <button name=\"info\" value=\"$meet_id\" type=\"submit\">Meeting info</button>
+                  <button name=\"info\" value=\"$meet_id\" type=\"submit\">View Mentees/Mentors</button>
+                </form></td>";
+          echo  "</td><td>
+                <form action=\"view2_sm.php\" method=\"post\">
+                    <button name=\"submit\" value=\"$meet_id\" type=\"submit\">View Study Materials</button>
                 </form></td></tr>";
         }
       }

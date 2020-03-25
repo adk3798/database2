@@ -29,7 +29,7 @@
       $grade = scrub_input($_POST["grade"]);
       $pemail = scrub_input($_POST["pemail"]);
 
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $query = "SELECT * FROM users WHERE email='$email'";
       $result = $mysqli->query($query);

@@ -27,7 +27,7 @@
       $name = scrub_input($_POST["name"]);
       $phone = scrub_input($_POST["phone"]);
 
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $query = "SELECT * FROM users WHERE email='$email'"; //You don't need a ; like you do in SQL
       $result = $mysqli->query($query);

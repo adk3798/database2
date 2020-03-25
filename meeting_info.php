@@ -80,7 +80,7 @@
   <?php
     $today = date("Y-m-d");
     if (isset($_POST['submit'])) { // submit being set means mentee
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $sid = $_SESSION['sid'];
       $meet_id = $_POST['submit'];
@@ -100,10 +100,6 @@
         $query = "SELECT * FROM enroll WHERE mentee_id='$sid'";
         $result = $mysqli->query($query);
 
-        if($result->num_rows === 0) {
-          $query = "DELETE FROM mentees WHERE mentee_id='$sid'";
-          $result = $mysqli->query($query);
-        }
         echo "<h1>You have left meeting $meet_name as a mentee</h1>";
       }
       else if(!$conflict){
@@ -123,7 +119,7 @@
       header('meeting_signup.php');
     }
     else if(isset($_POST['submit2'])) { // submit2 means mentor
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $sid = $_SESSION['sid'];
       $meet_id = $_POST['submit2'];
@@ -145,10 +141,6 @@
         $query = "SELECT * FROM enroll2 WHERE mentor_id='$sid'";
         $result = $mysqli->query($query);
 
-        if($result->num_rows === 0) {
-          $query = "DELETE FROM mentors WHERE mentor_id='$sid'";
-          $result = $mysqli->query($query);
-        }
         echo "<h1>You have left meeting $meet_name as a mentor</h1>";
       }
       else if(!$conflict){
@@ -168,7 +160,7 @@
     }
 
     else if(isset($_POST['submit_all_join'])) { // submit2 means mentor
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $printed = false;
 
@@ -214,7 +206,7 @@
     }
 
     else if(isset($_POST['submit_all_leave'])) { // submit2 means mentor
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $printed = false;
 
@@ -231,8 +223,6 @@
       $am_query = "SELECT * FROM meetings WHERE meet_name='$meet_name' AND time_slot_id=$meet_ts AND group_id=$meet_group";
       $am_result = $mysqli->query($am_query);
 
-      echo $am_query;
-
       while($am_row = mysqli_fetch_array($am_result)) {
         $meet_id = $am_row['meet_id'];
 
@@ -248,10 +238,6 @@
           $query = "SELECT * FROM enroll WHERE mentee_id='$sid'";
           $result = $mysqli->query($query);
 
-          if($result->num_rows === 0) {
-            $query = "DELETE FROM mentees WHERE mentee_id='$sid'";
-            $result = $mysqli->query($query);
-          }
           if(!$printed) {
             echo "<h1>You have left recurring $meet_name meeting as a mentee</h1>";
             $printed = true;
@@ -262,7 +248,7 @@
     }
 
     else if(isset($_POST['submit2_all_join'])) { // submit2 means mentor
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $printed = false;
 
@@ -308,7 +294,7 @@
     }
 
     else if(isset($_POST['submit2_all_leave'])) { // submit2 means mentor
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $printed = false;
 
@@ -340,10 +326,6 @@
           $query = "SELECT * FROM enroll2 WHERE mentor_id='$sid'";
           $result = $mysqli->query($query);
 
-          if($result->num_rows === 0) {
-            $query = "DELETE FROM mentors WHERE mentor_id='$sid'";
-            $result = $mysqli->query($query);
-          }
           if(!$printed) {
             echo "<h1>You have left recurring $meet_name meeting as a mentor</h1>";
             $printed = true;
@@ -354,14 +336,11 @@
     }
 
     else if(isset($_POST['leave_all_mentee'])) { // submit2 means mentor
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $sid = $_SESSION['sid'];
 
       $query = "DELETE FROM enroll WHERE mentee_id='$sid'";
-      $result = $mysqli->query($query);
-
-      $query = "DELETE FROM mentees WHERE mentee_id='$sid'";
       $result = $mysqli->query($query);
 
       echo "<h1>You have left all meetings as a mentee</h1>";
@@ -370,15 +349,13 @@
     }
 
     else if(isset($_POST['leave_all_mentor'])) { // submit2 means mentor
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $sid = $_SESSION['sid'];
 
       $query = "DELETE FROM enroll2 WHERE mentor_id='$sid'";
       $result = $mysqli->query($query);
 
-      $query = "DELETE FROM mentors WHERE mentor_id='$sid'";
-      $result = $mysqli->query($query);
 
       echo "<h1>You have left all meetings as a mentor</h1>";
 
@@ -399,7 +376,7 @@
 
   <?php
 
-    $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+    $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
     $sid = $_SESSION['sid'];
     $meet_id = -1;

@@ -19,12 +19,14 @@
 
   <?php
     if (isset($_POST['submit'])) { // submit being set means mentee
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $meet_id = $_POST['submit'];
 
       $query = "SELECT * FROM assign WHERE meet_id='$meet_id'";
       $result = $mysqli->query($query);
+
+      if
 
       echo "<table>";
 

@@ -37,7 +37,7 @@
       $today = date("Y-m-d");
       $mid = $_SESSION['mid'];
 
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $query = "INSERT INTO material (title, author, type, url, assigned_date, notes)
                 VALUES ('{$title}', '{$author}', '{$type}', '{$url}', '{$today}', '{$notes}')";

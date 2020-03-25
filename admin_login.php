@@ -25,7 +25,7 @@
       $email = scrub_input($_POST["email"]);
       $password = scrub_input($_POST["pwd"]);
 
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $query = "SELECT * FROM users WHERE email='$email' AND password='$password'"; //You don't need a ; like you do in SQL
       $result = $mysqli->query($query);

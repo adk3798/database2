@@ -11,7 +11,7 @@
   ?>
     <?php
 
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       echo '<h1>Welcome, ' . $_SESSION['name'] . '</h1>';
 

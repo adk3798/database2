@@ -21,7 +21,7 @@
 
     <?php
       if(isset($_SESSION['sid'])) {
-        $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+        $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
         $sid = $_SESSION['sid'];
         $query = "SELECT * FROM users WHERE id='$sid'"; //You don't need a ; like you do in SQL
         $result = $mysqli->query($query);
@@ -30,7 +30,7 @@
         echo "<h2>Currently editing info of <span style=\"color:red\"> $student_name</span></h2>";
       }
       else if(isset($_SESSION['pid'])) {
-        $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+        $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
         $pid = $_SESSION['pid'];
         $query = "SELECT * FROM users WHERE id='$pid'"; //You don't need a ; like you do in SQL
         $result = $mysqli->query($query);
@@ -69,7 +69,7 @@
       }
 
 
-      $mysqli = new mysqli('localhost', 'root', '', 'db2_project'); //The Blank string is the password
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
 
       $email_query = "SELECT * FROM users WHERE email='$email'"; //You don't need a ; like you do in SQL
       $email_result = $mysqli->query($email_query);
@@ -126,6 +126,11 @@
           if(isset($_POST['change_grade'])) {
             $update_query = "UPDATE students SET grade = $grade WHERE student_id=$id";
             $result = $mysqli->query($update_query);
+            // remove student from all meetings when changing grades
+            $query = "DELETE FROM mentors WHERE mentor_id=$id";
+            $result = $mysqli->query($query);
+            $query = "DELETE FROM mentees WHERE mentee_id=$id";
+            $result = $mysqli->query($query);
           }
 
           echo "<span style=\"color:red\"> Information Updated </span>";
