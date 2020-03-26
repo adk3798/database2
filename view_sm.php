@@ -26,8 +26,6 @@
       $query = "SELECT * FROM assign WHERE meet_id='$meet_id'";
       $result = $mysqli->query($query);
 
-      if
-
       echo "<table>";
 
       echo "<tr><td>" . "title" . "</td><td>" . 'author' . "</td>
@@ -39,9 +37,10 @@
         $material_query = "SELECT * FROM material WHERE material_id=$material_id";
         $material_result = $mysqli->query($material_query);
         $material_row = mysqli_fetch_array($material_result);
+        $url = $material_row['url'];
 
         echo "<tr><td>" . $material_row['title'] . "</td><td>" . $material_row['author'] . "</td>
-              <td>" . $material_row['type'] . "</td><td>" . $material_row['url'] . "</td>
+              <td>" . $material_row['type'] . "</td><td><a href=\"$url\">" . $url . "</a></td>
               <td>" . $material_row['assigned_date'] . "</td><td>" . $material_row['notes'] . "</td></tr>";
 
       }

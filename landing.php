@@ -8,6 +8,79 @@
 <body>
   <?php
     session_start();
+
+    // cancel meetings with fewer than 3 mentees when it is Friday
+    $day_of_week = date('l');
+    $today = date('Y-m-d');
+    /*$day_of_week = "Friday";
+    $today = "2020-04-10";*/
+    if($day_of_week === "Friday") {
+      $mysqli = new mysqli('localhost', 'root', '', 'DB2'); //The Blank string is the password
+      $meeting_query = "SELECT * FROM meetings WHERE date>='$today' ORDER BY date ASC"; //You don't need a ; like you do in SQL
+      $result = $mysqli->query($meeting_query);
+      while($row = mysqli_fetch_array($result)) {
+        $meet_date = $row['date'];
+        $meet_id = $row['meet_id'];
+        $subject = $row['meet_name'];
+        $dt1 = date_create($meet_date);
+        $dt2 = date_create($today);
+        $diff = date_diff($dt1, $dt2, true);
+        if((int)$diff->format('%a') <= 2) {
+          $mentee_query = "SELECT * FROM enroll WHERE meet_id=$meet_id";
+          $mentee_result = $mysqli->query($mentee_query);
+          $mentee_count = $mentee_result->num_rows;
+          if($mentee_count < 3) {
+            // notify students of cancellation
+            while($mentee_row = mysqli_fetch_array($mentee_result)) {
+              $sid = $mentee_row['mentee_id'];
+              $mentee_query2 = "SELECT * FROM users WHERE id=$sid";
+              $mentee_result2 = $mysqli->query($mentee_query2);
+              $mentee_row2 = mysqli_fetch_array($mentee_result2);
+              $name = $mentee_row2['name'];
+              $email = $mentee_row2['email'];
+              $phone = $mentee_row2['phone'];
+              $contents = $name . ' | ' . $email . ' | ' . $phone . ' | ' . $subject . ' | ' . $meet_date . "\n";
+
+              $file = 'cancel_notification.txt';
+
+              if(!is_file($file)){
+                file_put_contents($file, $contents);
+              }
+              else {
+                $fp = fopen('cancel_notification.txt', 'a');//opens file in append mode
+                fwrite($fp, $contents);
+                fclose($fp);
+              }
+            }
+            $mentor_query = "SELECT * FROM enroll2 WHERE meet_id=$meet_id";
+            $mentor_result = $mysqli->query($mentor_query);
+            while($mentor_row = mysqli_fetch_array($mentor_result)) {
+              $sid = $mentor_row['mentor_id'];
+              $mentor_query2 = "SELECT * FROM users WHERE id=$sid";
+              $mentor_result2 = $mysqli->query($mentor_query2);
+              $mentor_row2 = mysqli_fetch_array($mentor_result2);
+              $name = $mentor_row2['name'];
+              $email = $mentor_row2['email'];
+              $phone = $mentor_row2['phone'];
+              $contents = $name . ' | ' . $email . ' | ' . $phone . ' | ' . $subject . ' | ' . $meet_date . "\n";
+
+              $file = 'cancel_notification.txt';
+
+              if(!is_file($file)){
+                file_put_contents($file, $contents);
+              }
+              else {
+                $fp = fopen('cancel_notification.txt', 'a');//opens file in append mode
+                fwrite($fp, $contents);
+                fclose($fp);
+              }
+            }
+            $delete_query = "DELETE FROM meetings WHERE meet_id=$meet_id";
+            $delete_result = $mysqli->query($delete_query);
+          }
+        }
+      }
+    }
   ?>
   <?php if(isset($_SESSION['name'])) : ?>
     <?php

@@ -14,7 +14,7 @@
       echo '<h1>Welcome, ' . $_SESSION['name'] . '</h1>';
     ?>
   <?php endif; ?>
-  <h1> Login as a Parent </h1>
+  <h1> Login as an Admin </h1>
 
   <?php
     // define variables and set to empty values
